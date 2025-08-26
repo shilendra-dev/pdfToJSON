@@ -1,33 +1,45 @@
 {
-  "name": "pdfparse",
+  "name": "@yourusername/pdf-to-json",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Convert PDF documents to structured JSON with text content, formatting, and hyperlinks",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
-    "start": "node dist/index.js",
-    "dev": "tsx watch src/index.ts",
     "build": "tsc",
+    "prepare": "npm run build",
+    "dev": "tsx watch src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "demo": "tsx watch demo.ts"
+    "demo": "tsx demo.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "devDependencies": {
-    "@types/jsdom": "^21.1.7",
-    "@types/node": "^24.3.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.2"
-  },
+  "keywords": [
+    "pdf",
+    "json",
+    "converter",
+    "parser",
+    "extract",
+    "text",
+    "hyperlinks"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
   "dependencies": {
-    "@types/pdf-parse": "^1.1.5",
-    "cheerio": "^1.1.2",
-    "jsdom": "^26.1.0",
-    "pdf-parse": "^1.1.1",
-    "pdfjs-dist": "^5.4.54",
-    "pdfreader": "^3.0.7",
-    "puppeteer": "^24.17.0",
-    "tsx": "^4.20.5"
-  }
+    "pdfjs-dist": "^3.4.120"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "ts-node": "^10.9.1",
+    "tsx": "^4.20.5",
+    "typescript": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/pdf-to-json.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/pdf-to-json/issues"
+  },
+  "homepage": "https://github.com/yourusername/pdf-to-json#readme"
 }
