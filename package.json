@@ -1,5 +1,5 @@
 {
-  "name": "@shilendrasingh/pdf-to-json",
+  "name": "@shilendra-dev/pdf-to-json",
   "version": "1.0.2",
   "description": "Convert PDF documents to structured JSON with text content, formatting, and hyperlinks",
   "main": "dist/index.js",
