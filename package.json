@@ -1,5 +1,5 @@
 {
-  "name": "@yourusername/pdf-to-json",
+  "name": "@shilendrasingh/pdf-to-json",
   "version": "1.0.1",
   "description": "Convert PDF documents to structured JSON with text content, formatting, and hyperlinks",
   "main": "dist/index.js",
@@ -23,7 +23,7 @@
     "text",
     "hyperlinks"
   ],
-  "author": "Your Name <your.email@example.com>",
+  "author": "Shilendra Singh <shilendrasingh@example.com>",
   "license": "MIT",
   "dependencies": {
     "pdfjs-dist": "^3.4.120"
@@ -36,10 +36,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/pdf-to-json.git"
+    "url": "https://github.com/shilendrasingh/pdf-to-json.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/pdf-to-json/issues"
+    "url": "https://github.com/shilendrasingh/pdf-to-json/issues"
   },
-  "homepage": "https://github.com/yourusername/pdf-to-json#readme"
+  "homepage": "https://github.com/shilendrasingh/pdf-to-json#readme"
 }
