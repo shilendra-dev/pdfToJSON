@@ -7,7 +7,8 @@
     "start": "node dist/index.js",
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "demo": "tsx watch demo.ts"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +27,7 @@
     "pdf-parse": "^1.1.1",
     "pdfjs-dist": "^5.4.54",
     "pdfreader": "^3.0.7",
-    "puppeteer": "^24.17.0"
+    "puppeteer": "^24.17.0",
+    "tsx": "^4.20.5"
   }
 }
