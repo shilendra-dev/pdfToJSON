@@ -3,7 +3,14 @@ import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 
 export interface PdfTextItem {
   text: string;
-  transform: number[];
+  transform: {
+    scaleX: number;
+    scaleY: number;
+    skewX: number;
+    skewY: number;
+    coordX: number;
+    coordY: number;
+  };
   fontName: string;
   link?: string;
 }
@@ -25,19 +32,19 @@ export interface PdfPage {
 export interface PdfJson {
   numPages: number;
   pages: PdfPage[];
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 interface TextItem {
   str: string;
   transform: number[];
   fontName: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface TextContent {
   items: TextItem[];
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface ProcessPdfOptions {
@@ -57,7 +64,7 @@ export async function pdfToJson(
   options: ProcessPdfOptions = {}
 ): Promise<PdfJson> {
   const { scale = 1.0, includeLinks = true, outputPath } = options;
-  
+
   // @ts-ignore - PDF.js types issue with ESM
   const loadingTask = pdfjsLib.getDocument({ data: pdfData });
   const pdf = await loadingTask.promise;
@@ -72,46 +79,47 @@ export async function pdfToJson(
     const metadata = await pdf.getMetadata();
     if (metadata) {
       pdfJson.metadata = {
-        ...metadata.info,
-        metadata: metadata.metadata ? 
-          (metadata.metadata as any).getAll ? 
-            await (metadata.metadata as any).getAll() : 
-            metadata.metadata : 
-          undefined
+        ...metadata.info
       };
     }
   } catch (error) {
     console.warn('Could not extract PDF metadata:', error);
   }
-  //loop through each page
+  //loop through each pageFFF
   for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
     const page = await pdf.getPage(pageNum);
     const viewport = page.getViewport({ scale });
-    
+
     //get text content and annotations
     const [content, annotations] = await Promise.all([
       page.getTextContent() as Promise<TextContent>,
       includeLinks ? page.getAnnotations() : Promise.resolve([])
     ]);
-
     // Process text content
-    const items: PdfTextItem[] = content.items.map((item: TextItem) => ({
+    const items: PdfTextItem[] = content.items.map((item) => ({
       text: item.str,
-      transform: item.transform,
+      transform: {
+        scaleX: item.transform[0] as number,
+        scaleY: item.transform[3] as number,
+        skewX: item.transform[2] as number,
+        skewY: item.transform[1] as number,
+        coordX: item.transform[4] as number,
+        coordY: item.transform[5] as number
+      },
       fontName: item.fontName,
     }));
 
     // Process links if enabled
-    const links = includeLinks 
+    const links = includeLinks
       ? annotations
-          .filter(anno => anno.subtype === 'Link' && (anno.url || anno.unsafeUrl))
-          .map(link => ({
-            x: link.rect[0],
-            y: viewport.height - link.rect[3],
-            width: link.rect[2] - link.rect[0],
-            height: link.rect[3] - link.rect[1],
-            url: link.url || link.unsafeUrl || ''
-          }))
+        .filter(anno => anno.subtype === 'Link' && (anno.url || anno.unsafeUrl))
+        .map(link => ({
+          x: link.rect[0],
+          y: link.rect[1],
+          width: link.rect[2] - link.rect[0],
+          height: link.rect[3] - link.rect[1],
+          url: link.url || link.unsafeUrl || ''
+        }))
       : [];
 
     //push page data to pdfJson
